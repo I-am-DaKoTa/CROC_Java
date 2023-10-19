@@ -1,6 +1,7 @@
 package ArturKuznetsov.lab2.task4;
 
 import java.util.Scanner;
+import static java.lang.Math.abs;
 
 public class SumOfArithmeticProgression {
     public static void main(String[] args) {
@@ -12,8 +13,8 @@ public class SumOfArithmeticProgression {
         int numberOfTerms = in.nextInt();
         in.close();
 
-        int sumOfProgression = 0;
-        for (int i = 0; i < numberOfTerms; i++) {
+        long sumOfProgression = 0;
+        for (long i = 0; i < abs(numberOfTerms); i++) {
             sumOfProgression += initialElement + i * progressionDifference;
         }
         System.out.printf("Сумма: %d\n", sumOfProgression);
