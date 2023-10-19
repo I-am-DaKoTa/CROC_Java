@@ -12,19 +12,17 @@ public class PrimeNumber {
         long number = in.nextLong();
         in.close();
 
-        if (prime.IsPrime(number) && prime.IsPrime(number-2)) {
-            System.out.printf("Число %d - простое и является числом-близнецом для числа %d\n", number, number-2);
+        if (prime.IsPrime(number)){
+            if (prime.IsPrime(number-2)){
+                System.out.printf("Число %d - простое и является числом-близнецом для числа %d\n", number, number-2);
 
-        } else if (prime.IsPrime(number) && prime.IsPrime(number+2)) {
-            System.out.printf("Число %d - простое и является числом-близнецом для числа %d\n", number, number+2);
+            } else if (prime.IsPrime(number+2)) {
+                System.out.printf("Число %d - простое и является числом-близнецом для числа %d\n", number, number+2);
 
-        } else if (prime.IsPrime(number)) {
+            }
             System.out.printf("Число %d - простое\n", number);
-
-        } else {
-            System.out.printf("Число %d - составное\n", number);
-
         }
+        System.out.printf("Число %d - составное\n", number);
     }
 
 }
