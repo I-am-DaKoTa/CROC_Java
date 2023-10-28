@@ -34,8 +34,15 @@ public class RobotVacuumCleaner extends VacuumCleaner{
 
     @Override
     public String displayProductInfo() {
-        String productInfo = super.displayProductInfo();
-        /*
+        String warrantyPeriod;
+        if (getWarranty() == 1){
+            warrantyPeriod = "год";
+        } else if (1 < getWarranty() || getWarranty() < 5) {
+            warrantyPeriod = "года";
+        } else {
+            warrantyPeriod = "лет";
+        }
+
         List<String> designFeaturesList = new ArrayList<>();
         if (isAccelerometer()) {
             designFeaturesList.add("Акселерометр");
@@ -67,11 +74,20 @@ public class RobotVacuumCleaner extends VacuumCleaner{
 
         String designFeatures = String.join(", ", designFeaturesList);
 
+
+        String productInfo = "Информация о товаре\n";
+        productInfo += String.format("Цена: %.2f₽\n", getPrice());
+        productInfo += String.format("Наименование: %s\n", getName());
+        productInfo += String.format("Описание: %s\n", getDescription());
+        productInfo += String.format("Цвет: %s\n", getColor());
+        productInfo += String.format("Страна производства: %s\n", getCountry());
+        productInfo += String.format("Гарантия: %d %s\n", getWarranty(), warrantyPeriod);
+        productInfo += String.format("Вес: %s кг\n", getWeight());
         productInfo += String.format("Тип уборки: %s\n", getCleaningType());
-        productInfo += String.format("Объем пылесборника: %.2f л\n", getDustBagCapacity());
-        productInfo += String.format("Мощность всасывания: %.2f Вт\n", getSuctionPower());
+        productInfo += String.format("Тип уборки: %.2f л\n", getDustBagCapacity());
+        productInfo += String.format("Тип уборки: %.2f Вт\n", getSuctionPower());
         productInfo += String.format("Особенности конструкции: %s\n", designFeatures);
-        */
+
         return productInfo;
     }
 
