@@ -5,8 +5,6 @@ import ArturKuznetsov.lab3.task5.enums.Countries;
 import ArturKuznetsov.lab3.task5.exceptions.InvalidValueException;
 import ArturKuznetsov.lab3.task5.exceptions.NotImportedProductException;
 
-import java.util.Objects;
-
 public abstract class Product {
     private final double price;
     private final String name;
@@ -64,45 +62,22 @@ public abstract class Product {
     }
 
     public String displayProductInfo() {
-        String warrantyPeriod = getWarrantyPeriod();
-
-        String productInfo = "Информация о товаре\n";
-        //productInfo += String.format("Цена: %.2f₽\n", getPrice());
-        productInfo += String.format("Наименование: %s\n", getName());
-        //productInfo += String.format("Описание: %s\n", getDescription());
-        //productInfo += String.format("Цвет: %s\n", getColor());
-        productInfo += String.format("Страна производства: %s\n", getCountry());
-        //productInfo += String.format("Гарантия: %d %s\n", getWarranty(), warrantyPeriod);
-        //productInfo += String.format("Вес: %s кг\n", getWeight());
-
-        return productInfo;
+        return null;
     }
 
-    protected String getWarrantyPeriod() {
-        if (getWarranty() == 1) {
-            return "год";
+    public String getImportProductDetails() throws NotImportedProductException {
+        if (getCountry().equalsIgnoreCase("Россия")) {
+            throw new NotImportedProductException("Товар не является импортным.");
+        }
+
+        String warrantyPeriod;
+        if (getWarranty() == 1){
+            warrantyPeriod = "год";
         } else if (1 < getWarranty() || getWarranty() < 5) {
-            return "года";
+            warrantyPeriod = "года";
         } else {
-            return "лет";
+            warrantyPeriod = "лет";
         }
-    }
-
-    public void isImportedException() throws NotImportedProductException {
-        if (Objects.equals(getCountry(), "Россия")) {
-            throw new NotImportedProductException(String.format("%s не является импортным.\n", getName()));
-        }
-    }
-
-    public String getImportProductDetails() {
-        try {
-            isImportedException();
-        }
-        catch (NotImportedProductException e) {
-            return (e.getMessage());
-        }
-
-        String warrantyPeriod = getWarrantyPeriod();
 
         String importProductDetails = "Информация об импортном товаре \n";
         importProductDetails += String.format("Наименование: %s\n", getName());
@@ -110,6 +85,5 @@ public abstract class Product {
         importProductDetails += String.format("Гарантия: %d %s\n", getWarranty(), warrantyPeriod);
 
         return importProductDetails;
-
     }
 }
