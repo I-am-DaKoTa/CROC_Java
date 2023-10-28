@@ -30,6 +30,15 @@ public class Main {
 
         catalog.showAllCatalog();
 
+        System.out.println("================================================\n");
+
+        catalog.showFirstImportedThenLocal();
+
+        System.out.println("================================================\n");
+
         System.out.println(fridge.getImportProductDetails());
+        System.out.println(robotVacuumCleaner.getImportProductDetails());
+        System.out.println(washingMachine.getImportProductDetails());
+
     }
 }
