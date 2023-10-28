@@ -44,30 +44,15 @@ public class WashingMachine extends Product {
 
     @Override
     public String displayProductInfo() {
-        String warrantyPeriod;
-        if (getWarranty() == 1){
-            warrantyPeriod = "год";
-        } else if (1 < getWarranty() || getWarranty() < 5) {
-            warrantyPeriod = "года";
-        } else {
-            warrantyPeriod = "лет";
-        }
-
-        String productInfo = "Информация о товаре\n";
-        productInfo += String.format("Цена: %.2f₽\n", getPrice());
-        productInfo += String.format("Наименование: %s\n", getName());
-        productInfo += String.format("Описание: %s\n", getDescription());
-        productInfo += String.format("Цвет: %s\n", getColor());
-        productInfo += String.format("Страна производства: %s\n", getCountry());
-        productInfo += String.format("Гарантия: %d %s\n", getWarranty(), warrantyPeriod);
-        productInfo += String.format("Вес: %s кг\n", getWeight());
+        String productInfo = super.displayProductInfo();
+        /*
         productInfo += String.format("Тип загрузки: %s\n", getLoadType());
         productInfo += String.format("Максимальная загрузка белья : %.2f кг\n", getMaxLoadKilograms());
         if (isHasDryer()){productInfo += "Особенности конструкции: Есть сушильная машина\n";}
         productInfo += String.format("Максимальная скорость вращения: %d об/мин\n", getMaxSpinSpeedRPM());
         productInfo += String.format("Класс энергопотребления: %s\n", getEnergyEfficiency());
         productInfo += String.format("ШхВхГ: %.2fсм x %.2fсм x %.2fсм\n", getWidthInCentimeters(), getHeightInCentimeters(), getDepthInCentimeters());
-
+         */
         return productInfo;
     }
 
