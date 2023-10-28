@@ -25,27 +25,12 @@ public class VacuumCleaner extends Product{
 
     @Override
     public String displayProductInfo() {
-        String warrantyPeriod;
-        if (getWarranty() == 1){
-            warrantyPeriod = "год";
-        } else if (1 < getWarranty() || getWarranty() < 5) {
-            warrantyPeriod = "года";
-        } else {
-            warrantyPeriod = "лет";
-        }
-
-        String productInfo = "Информация о товаре\n";
-        productInfo += String.format("Цена: %.2f₽\n", getPrice());
-        productInfo += String.format("Наименование: %s\n", getName());
-        productInfo += String.format("Описание: %s\n", getDescription());
-        productInfo += String.format("Цвет: %s\n", getColor());
-        productInfo += String.format("Страна производства: %s\n", getCountry());
-        productInfo += String.format("Гарантия: %d %s\n", getWarranty(), warrantyPeriod);
-        productInfo += String.format("Вес: %s кг\n", getWeight());
+        String productInfo = super.displayProductInfo();
+        /*
         productInfo += String.format("Тип уборки: %s\n", getCleaningType());
         productInfo += String.format("Объем пылесборника: %.2f л\n", getDustBagCapacity());
         productInfo += String.format("Мощность всасывания: %.2f Вт\n", getSuctionPower());
-
+        */
         return productInfo;
     }
 
