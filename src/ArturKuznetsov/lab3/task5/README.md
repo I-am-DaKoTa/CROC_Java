@@ -23,8 +23,8 @@ import ArturKuznetsov.lab3.task5.exceptions.InvalidValueException;
 import ArturKuznetsov.lab3.task5.exceptions.NotImportedProductException;
 
 public class Main {
-public static void main(String[] args) throws NotImportedProductException, InvalidValueException {
-Director director = new Director();
+    public static void main(String[] args) throws NotImportedProductException, InvalidValueException {
+        Director director = new Director();
 
         var fridgeBuilder = new FridgeBuilder();
         var robotVacuumCleanerBuilder = new RobotVacuumCleanerBuilder();
@@ -45,9 +45,18 @@ Director director = new Director();
 
         catalog.showAllCatalog();
 
+        System.out.println("================================================\n");
+
+        catalog.showFirstImportedThenLocal();
+
+        System.out.println("================================================\n");
+
         System.out.println(fridge.getImportProductDetails());
+        System.out.println(robotVacuumCleaner.getImportProductDetails());
+        System.out.println(washingMachine.getImportProductDetails());
+
     }
 }
 ```
-![Консоль1](../../../../img/console1_task5.png)
-![Консоль2](../../../../img/console2_task5.png)
+![Консоль1](../../../../img/console_task5_1.png)
+![Консоль2](../../../../img/console_task5_2.png)
