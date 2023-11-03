@@ -17,9 +17,19 @@ public class Circle extends Figure {
     }
 
     @Override
+    public boolean containsPoint(int x, int y) {
+        return Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2) <= Math.pow(radius, 2);
+    }
+
+    @Override
     public void move(int dx, int dy) {
         centerX += dx;
         centerY += dy;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Circle (%d, %d), %d: ", getCenterX(), getCenterY(), getRadius());
     }
 
     public int getCenterX() {
