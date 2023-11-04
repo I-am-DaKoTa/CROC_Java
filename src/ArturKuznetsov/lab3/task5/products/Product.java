@@ -5,6 +5,8 @@ import ArturKuznetsov.lab3.task5.enums.Countries;
 import ArturKuznetsov.lab3.task5.exceptions.InvalidValueException;
 import ArturKuznetsov.lab3.task5.exceptions.NotImportedProductException;
 
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Objects;
 
 public abstract class Product {
@@ -66,8 +68,11 @@ public abstract class Product {
     public String displayProductInfo() {
         String warrantyPeriod = getWarrantyPeriod();
 
+        Locale russian = new Locale("ru", "RU");
+        NumberFormat russianFormat = NumberFormat.getCurrencyInstance(russian);
+
         String productInfo = "Информация о товаре\n";
-        productInfo += String.format("Цена: %.2f₽\n", getPrice());
+        productInfo += String.format("Цена: %s\n", russianFormat.format(getPrice()));
         productInfo += String.format("Наименование: %s\n", getName());
         productInfo += String.format("Описание: %s\n", getDescription());
         productInfo += String.format("Цвет: %s\n", getColor());
