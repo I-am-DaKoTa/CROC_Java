@@ -3,14 +3,15 @@ package ArturKuznetsov.lab4.task7;
 import ArturKuznetsov.lab3.task5.products.Product;
 import ArturKuznetsov.lab4.task7.enums.OrderStatus;
 import ArturKuznetsov.lab4.task7.exceptions.InvalidOrderSize;
-import ArturKuznetsov.lab4.task7.exceptions.OrderStatusExpection;
+import ArturKuznetsov.lab4.task7.exceptions.OrderStatusException;
+import ArturKuznetsov.lab4.task7.interfaces.IOrder;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class Order {
+public class Order implements IOrder {
     private final String id;
     private final LocalDateTime createdDateTime;
     private LocalDateTime collectedDateTime;
@@ -35,18 +36,22 @@ public class Order {
         return createdDateTime.format(formatter) + client.getPhoneNumber().substring(7);
     }
 
-    public void collectOrder() {
+    public void collectOrder() throws OrderStatusException {
+        if (status != OrderStatus.CREATED) {
+            throw new OrderStatusException("Нельзя собрать заказ с текущим статусом: " + getStatus());
+        }
         status = OrderStatus.COLLECTED;
         collectedDateTime = LocalDateTime.now();
-        var notification = new Notification(this, client);
-        System.out.println(notification);
     }
 
-    public void expireOrder() {
+    private void expireOrder() {
         status = OrderStatus.EXPIRED;
     }
 
-    public void closeOrder() {
+    public void closeOrder() throws OrderStatusException {
+        if (status != OrderStatus.COLLECTED) {
+            throw new OrderStatusException("Нельзя закрыть заказ с текущим статусом: " + getStatus());
+        }
         status = OrderStatus.CLOSED;
         closedDateTime = LocalDateTime.now();
     }
@@ -60,16 +65,21 @@ public class Order {
         return isStatusExpired;
     }
 
-    public boolean canGetOrder() throws OrderStatusExpection {
+    public boolean canGetOrder() throws OrderStatusException {
         if (status == OrderStatus.CREATED) {
             return false;
-        } else if (status == OrderStatus.COLLECTED) {
-            if (checkOrderStatusExpired()){
-                throw new OrderStatusExpection(String.format("Статус заказа: %s", getStatus()));
-            }
-            return true;
+        } else if (checkOrderStatusExpired()) {
+            throw new OrderStatusException("Невозможно получить заказ с текущим статусом: " + getStatus());
         }
-        throw new OrderStatusExpection(String.format("Статус заказа: %s", getStatus()));
+        return true;
+    }
+
+    public Notification getOrderNotification() throws OrderStatusException {
+        if (!status.equals(OrderStatus.COLLECTED)) {
+            throw new OrderStatusException("Нельзя получить уведомление, так как статус заказа " + getStatus());
+        }
+        return new Notification(this, client);
+
     }
 
     public String getId() {
@@ -89,7 +99,7 @@ public class Order {
     }
 
     public ArrayList<Product> getOrderList() {
-        return orderList;
+        return new ArrayList<>(orderList);
     }
 
     public String getStatus() {
