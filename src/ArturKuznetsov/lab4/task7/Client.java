@@ -3,10 +3,11 @@ package ArturKuznetsov.lab4.task7;
 import ArturKuznetsov.lab4.task7.enums.Gender;
 import ArturKuznetsov.lab4.task7.exceptions.InvalidCustomerData;
 import ArturKuznetsov.lab4.task7.exceptions.InvalidPhoneNumberException;
+import ArturKuznetsov.lab4.task7.interfaces.IClient;
 
 import java.util.Objects;
 
-public class Client {
+public class Client implements IClient {
     private final String phoneNumber;
     private final String lastName;
     private final String firstName;
@@ -51,7 +52,7 @@ public class Client {
         return phoneNumber;
     }
 
-    public String getGender() {
-        return gender.getClientGender();
+    public Gender getGender() {
+        return gender;
     }
 }
