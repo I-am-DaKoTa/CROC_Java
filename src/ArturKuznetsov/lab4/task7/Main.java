@@ -10,13 +10,13 @@ import ArturKuznetsov.lab4.task7.enums.Gender;
 import ArturKuznetsov.lab4.task7.exceptions.InvalidCustomerData;
 import ArturKuznetsov.lab4.task7.exceptions.InvalidOrderSize;
 import ArturKuznetsov.lab4.task7.exceptions.InvalidPhoneNumberException;
-import ArturKuznetsov.lab4.task7.exceptions.OrderStatusExpection;
+import ArturKuznetsov.lab4.task7.exceptions.OrderStatusException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args) throws InvalidValueException, InvalidPhoneNumberException, InvalidCustomerData, InvalidOrderSize, OrderStatusExpection {
+    public static void main(String[] args) throws InvalidValueException, InvalidPhoneNumberException, InvalidCustomerData, InvalidOrderSize, OrderStatusException {
         Director director = new Director();
 
         var fridgeBuilder = new FridgeBuilder();
@@ -49,6 +49,7 @@ public class Main {
         order.collectOrder();
         System.out.println(order.getStatus());
         System.out.println(order.canGetOrder());
+        System.out.println(order.getOrderNotification());
 
         order.closeOrder();
         System.out.println(order.getStatus());
