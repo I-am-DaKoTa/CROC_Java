@@ -78,8 +78,11 @@ public class Order implements IOrder {
         if (!status.equals(OrderStatus.COLLECTED)) {
             throw new OrderStatusException("Нельзя получить уведомление, так как статус заказа " + getStatus());
         }
-        return new Notification(this, client);
+        return new Notification(this);
+    }
 
+    public final Client getClient(){
+        return client;
     }
 
     public String getId() {
