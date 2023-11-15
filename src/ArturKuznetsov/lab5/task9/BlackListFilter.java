@@ -1,7 +1,5 @@
 package ArturKuznetsov.lab5.task9;
 
-
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -26,19 +24,14 @@ public class BlackListFilter implements IBlackListFilter {
                 continue;
             }
 
-            Set<String> newBlackList = new HashSet<>();
             for (String wordFromBlackList : blackList) {
                 if (commentContainsWordFromBlackList(wordFromBlackList, comment)) {
-                    newBlackList.add(wordFromBlackList);
+                    comment = comment.replaceAll(wordFromBlackList, "*".repeat(wordFromBlackList.length()));
                 }
             }
 
-            if (newBlackList.isEmpty()) {
-                commentIndex++;
-                continue;
-            }
+            comments.set(commentIndex, comment);
 
-            comments.set(commentIndex, String.valueOf(checkWordsInComment(newBlackList, comment)));
             commentIndex++;
         }
     }
@@ -48,50 +41,5 @@ public class BlackListFilter implements IBlackListFilter {
         Matcher matcher = Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(comment);
 
         return matcher.find();
-    }
-
-    private StringBuilder checkWordsInComment(Set<String> newBlackList, String comment) {
-        String regex = "[.,!?:;\\-\"'()\\s]+";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(comment);
-
-        StringBuilder replacedComment = new StringBuilder();
-
-        int start = 0;
-        while (matcher.find()) {
-            int end = matcher.start();
-            if (end > start) {
-                String wordFromComment = comment.substring(start, end);
-
-                if (!isWordFromBlackList(newBlackList, wordFromComment, replacedComment)) {
-                    replacedComment.append(wordFromComment);
-                }
-
-            }
-            String match = matcher.group();
-            replacedComment.append(match);
-            start = matcher.end();
-        }
-
-        if (start < comment.length()) {
-            String wordFromComment = comment.substring(start);
-            replacedComment.append(wordFromComment);
-        }
-
-        return replacedComment;
-    }
-
-    private boolean isWordFromBlackList(Set<String> blackList, String wordFromComment, StringBuilder verifiedComment) {
-        for (String word : blackList) {
-            if (wordFromComment.equalsIgnoreCase(word)) {
-                verifiedComment.append(replaceWithStars(wordFromComment));
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private String replaceWithStars(String word) {
-        return "*".repeat(word.length());
     }
 }
