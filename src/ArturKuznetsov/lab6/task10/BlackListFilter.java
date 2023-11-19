@@ -1,12 +1,11 @@
 package ArturKuznetsov.lab6.task10;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BlackListFilter implements IBlackListFilter{
+public class BlackListFilter implements IBlackListFilter<String>{
     public Predicate<String> createPredicate(Set<String> blackList) {
         return str -> {
             if (str == null) {
