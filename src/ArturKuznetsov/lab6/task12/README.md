@@ -24,7 +24,7 @@ public class Main {
             return true;
         };
 
-        Function<Integer, Integer> alreadyMaxNumber = value -> value;
+        Function<Integer, Integer> alreadyMaxNumber = Function.identity();
 
         Function<Integer, Integer> makeMaxNumber = value -> {
             String digits = String.valueOf(value);
@@ -42,7 +42,8 @@ public class Main {
         };
 
         int testValue1 = 56932175;
-        var result1 = TernaryOperator.run(isMaxPossible, alreadyMaxNumber, makeMaxNumber, testValue1);
+        var result1Func = TernaryOperator.run(isMaxPossible, alreadyMaxNumber, makeMaxNumber);
+        int result1 = result1Func.apply(testValue1);
         System.out.println(result1); // 97655321
 
         Predicate<String> isSorted = str -> {
@@ -52,18 +53,17 @@ public class Main {
             return Arrays.equals(chars, sortedChars);
         };
 
-        Function<String, String> alreadySorted = str -> {
-            System.out.println(str);
-            return str;
-        };
+        Function<String, String> alreadySorted = Function.identity();
 
         Function<String, String> sortString = str -> {
             char[] chars = str.toCharArray();
             Arrays.sort(chars);
             return new String(chars).replaceAll("[\\s\\p{P}]", "");
         };
+
         String testValue2 = "hello world!";
-        String result2 = TernaryOperator.run(isSorted, alreadySorted, sortString, testValue2);
+        var result2Func = TernaryOperator.run(isSorted, alreadySorted, sortString);
+        String result2 = result2Func.apply(testValue2);
         System.out.println(result2); // dehllloorw
     }
 }
