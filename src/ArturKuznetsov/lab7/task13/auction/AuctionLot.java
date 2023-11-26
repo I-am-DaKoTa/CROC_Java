@@ -1,4 +1,4 @@
-package ArturKuznetsov.lab7.task13.Auctuion;
+package ArturKuznetsov.lab7.task13.auction;
 
 import ArturKuznetsov.lab7.task13.exceptions.InvalidDataForBidException;
 import ArturKuznetsov.lab7.task13.exceptions.WinnerIsUndecidedException;
@@ -23,7 +23,7 @@ public class AuctionLot {
         this.endTime = Instant.now().plus(Duration.ofMinutes(1));
     }
 
-    public synchronized void placeBid(long bid, String bidderName) {
+    public void placeBid(long bid, String bidderName) {
         if (isAuctionFinished()) {
             throw new InvalidDataForBidException(bidderName, getFormattedNumber(bid), "время ставок закончилось.");
         }
@@ -33,18 +33,23 @@ public class AuctionLot {
         if (bid <= currentPrice) {
             throw new InvalidDataForBidException(bidderName, getFormattedNumber(bid), "она меньше или равна текущей максимальной ставки.");
         }
-
-        currentPrice = bid;
-        currentBidder = bidderName;
-        amountOfBids++;
+        synchronized (this) {
+            currentPrice = bid;
+            currentBidder = bidderName;
+            amountOfBids++;
+        }
     }
 
-    public synchronized boolean isAuctionFinished() {
+    public boolean isAuctionFinished() {
         Instant currentTime = Instant.now();
         return currentTime.isAfter(endTime);
     }
 
-    public synchronized String getCurrentPrice() {
+    public long getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public String getFormattedCurrentPrice() {
         return getFormattedNumber(currentPrice);
     }
 
@@ -53,7 +58,7 @@ public class AuctionLot {
             throw new WinnerIsUndecidedException("Аукцион ещё не закончился, поэтому ещё нет победителя");
         }
         return String.format("Поздравляем! После %d ставок %s выигрывает аукцион и забирает\n%s за %s.",
-                amountOfBids, currentBidder, name, getCurrentPrice());
+                amountOfBids, currentBidder, name, getFormattedCurrentPrice());
     }
 
     public String getName() {
