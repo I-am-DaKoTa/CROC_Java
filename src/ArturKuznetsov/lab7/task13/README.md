@@ -41,12 +41,13 @@
 
 
 ### Решение
+
 ```java
 package ArturKuznetsov.lab7.task13;
 
-import ArturKuznetsov.lab7.task13.Auctuion.AuctionFileReader;
-import ArturKuznetsov.lab7.task13.Auctuion.AuctionLot;
-import ArturKuznetsov.lab7.task13.Auctuion.AuctionParticipant;
+import ArturKuznetsov.lab7.task13.auction.AuctionFileReader;
+import ArturKuznetsov.lab7.task13.auction.AuctionLot;
+import ArturKuznetsov.lab7.task13.auction.AuctionParticipant;
 
 import java.util.ArrayList;
 
