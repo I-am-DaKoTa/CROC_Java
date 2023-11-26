@@ -1,4 +1,4 @@
-package ArturKuznetsov.lab7.task13.Auctuion;
+package ArturKuznetsov.lab7.task13.auction;
 
 
 import java.io.BufferedReader;
@@ -7,29 +7,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AuctionFileReader {
-    public ArrayList<AuctionLot> readLotFile(String filePath) {
+    public static ArrayList<AuctionLot> readLotFile(String filePath) {
         ArrayList<AuctionLot> auctionLots = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String name;
-            long price;
-
             String line;
             while ((name = reader.readLine()) != null && (line = reader.readLine()) != null) {
                 try {
-                    price = Long.parseLong(line.trim());
+                    long price = Long.parseLong(line.trim());
                     AuctionLot lot = new AuctionLot(name.trim(), price);
                     auctionLots.add(lot);
                 } catch (NumberFormatException e) {
-                    System.out.println(e.getMessage());
+                    throw new RuntimeException(e.getMessage());
                 }
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
         return auctionLots;
     }
 
-    public ArrayList<String> readParticipantFile(String filePath) {
+    public static ArrayList<String> readParticipantFile(String filePath) {
         ArrayList<String> participantsData = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -38,7 +36,7 @@ public class AuctionFileReader {
                 participantsData.add(line);
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
 
         return participantsData;
