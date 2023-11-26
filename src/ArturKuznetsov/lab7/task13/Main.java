@@ -1,24 +1,22 @@
 package ArturKuznetsov.lab7.task13;
 
-import ArturKuznetsov.lab7.task13.Auctuion.AuctionFileReader;
-import ArturKuznetsov.lab7.task13.Auctuion.AuctionLot;
-import ArturKuznetsov.lab7.task13.Auctuion.AuctionParticipant;
+import ArturKuznetsov.lab7.task13.auction.AuctionFileReader;
+import ArturKuznetsov.lab7.task13.auction.AuctionLot;
+import ArturKuznetsov.lab7.task13.auction.AuctionParticipant;
 
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        AuctionFileReader fileReader = new AuctionFileReader();
-
         String lotFilePath = "src/ArturKuznetsov/lab7/task13/textFiles/lot.txt";
-        ArrayList<AuctionLot> lots = fileReader.readLotFile(lotFilePath);
+        ArrayList<AuctionLot> lots = AuctionFileReader.readLotFile(lotFilePath);
         System.out.println("Лоты аукциона:");
         for (AuctionLot lot : lots) {
             System.out.println("Лот: " + lot.getName() + ", Цена: " + lot.getStartedPrice());
         }
 
         String participantsFilePath = "src/ArturKuznetsov/lab7/task13/textFiles/participants.txt";
-        ArrayList<String> participantsName = fileReader.readParticipantFile(participantsFilePath);
+        ArrayList<String> participantsName = AuctionFileReader.readParticipantFile(participantsFilePath);
         System.out.println("\nУчастники аукциона:");
         ArrayList<AuctionParticipant> participants = new ArrayList<>();
         for (String participantName : participantsName) {
