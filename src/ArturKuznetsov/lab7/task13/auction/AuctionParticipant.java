@@ -1,4 +1,4 @@
-package ArturKuznetsov.lab7.task13.Auctuion;
+package ArturKuznetsov.lab7.task13.auction;
 
 import ArturKuznetsov.lab7.task13.exceptions.InvalidDataForBidException;
 
@@ -19,7 +19,7 @@ public class AuctionParticipant implements Runnable {
         while (!lot.isAuctionFinished()) {
             long minValue = 100;
             long maxValue = 10000;
-            long currentBid = Long.parseLong(lot.getCurrentPrice().replaceAll("\\D", "")) / 100;
+            long currentBid = lot.getCurrentPrice();
             long bidIncrement = minValue + (long) (random.nextDouble() * (maxValue - minValue));
             long bidAmount = currentBid + bidIncrement;
 
