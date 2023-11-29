@@ -25,7 +25,7 @@ public class DatabaseContentViewer {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -45,7 +45,7 @@ public class DatabaseContentViewer {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -64,7 +64,7 @@ public class DatabaseContentViewer {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 }

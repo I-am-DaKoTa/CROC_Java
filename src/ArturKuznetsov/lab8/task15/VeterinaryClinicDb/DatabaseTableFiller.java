@@ -28,7 +28,7 @@ public class DatabaseTableFiller {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -51,7 +51,7 @@ public class DatabaseTableFiller {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -72,7 +72,7 @@ public class DatabaseTableFiller {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 }

@@ -18,7 +18,7 @@ public class DatabaseConnector {
             try {
                 connection.close();
             } catch (SQLException e) {
-                throw new RuntimeException();
+                throw new RuntimeException(e);
             }
         }
     }
