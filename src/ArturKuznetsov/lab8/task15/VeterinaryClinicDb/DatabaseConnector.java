@@ -5,12 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnector {
-    private static final String DB_URL = "jdbc:h2:~/vet_clinic_db";
-    private static final String DB_USER = "admin";
-    private static final String DB_PASSWORD = "";
+    private DatabaseConnector() {
+    }
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+    public static Connection getConnection(String dbUrl, String dbUser, String dbPassword) throws SQLException {
+        return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
 
     public static void closeConnection(Connection connection) {

@@ -7,10 +7,11 @@ import java.sql.Statement;
 import java.util.List;
 
 public class DatabaseTableFiller {
+    private DatabaseTableFiller() {
+    }
 
-    public static void fillClientsTable(List<List<String>> records) {
-        try (Connection connection = DatabaseConnector.getConnection();
-             Statement statement = connection.createStatement()) {
+    public static void fillClientsTable(List<List<String>> records, Connection connection) {
+        try (Statement statement = connection.createStatement()) {
 
             for (List<String> client : records.stream().map(record -> record.subList(0, 4)).distinct().toList()) {
                 int id = Integer.parseInt(client.get(0));
@@ -32,9 +33,8 @@ public class DatabaseTableFiller {
         }
     }
 
-    public static void fillPetsTable(List<List<String>> records) {
-        try (Connection connection = DatabaseConnector.getConnection();
-             Statement statement = connection.createStatement()) {
+    public static void fillPetsTable(List<List<String>> records, Connection connection) {
+        try (Statement statement = connection.createStatement()) {
 
             for (List<String> pet : records.stream().map(record -> record.subList(4, 7)).distinct().toList()) {
                 int medicalCard = Integer.parseInt(pet.get(0));
@@ -55,9 +55,8 @@ public class DatabaseTableFiller {
         }
     }
 
-    public static void fillClientWithPetTable(List<List<String>> records) {
-        try (Connection connection = DatabaseConnector.getConnection();
-             Statement statement = connection.createStatement()) {
+    public static void fillClientWithPetTable(List<List<String>> records, Connection connection) {
+        try (Statement statement = connection.createStatement()) {
 
             for (List<String> composition : records.stream().map(record -> List.of(record.get(0), record.get(4))).distinct().toList()) {
                 int clientId = Integer.parseInt(composition.get(0));

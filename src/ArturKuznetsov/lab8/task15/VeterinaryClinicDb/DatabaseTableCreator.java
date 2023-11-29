@@ -5,9 +5,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseTableCreator {
-    public static void createClientTable() {
-        try (Connection connection = DatabaseConnector.getConnection();
-             Statement statement = connection.createStatement()) {
+    private DatabaseTableCreator() {
+    }
+
+    public static void createClientTable(Connection connection) {
+        try (Statement statement = connection.createStatement()) {
 
             statement.execute(
                     "CREATE TABLE IF NOT EXISTS client" +
@@ -22,9 +24,8 @@ public class DatabaseTableCreator {
         }
     }
 
-    public static void createPetTable() {
-        try (Connection connection = DatabaseConnector.getConnection();
-             Statement statement = connection.createStatement()) {
+    public static void createPetTable(Connection connection) {
+        try (Statement statement = connection.createStatement()) {
 
             statement.execute(
                     "CREATE TABLE IF NOT EXISTS pet" +
@@ -38,9 +39,8 @@ public class DatabaseTableCreator {
         }
     }
 
-    public static void createClientWithPetTable() {
-        try (Connection connection = DatabaseConnector.getConnection();
-             Statement statement = connection.createStatement()) {
+    public static void createClientWithPetTable(Connection connection) {
+        try (Statement statement = connection.createStatement()) {
 
             statement.execute(
                     "CREATE TABLE IF NOT EXISTS client_with_pet(" +

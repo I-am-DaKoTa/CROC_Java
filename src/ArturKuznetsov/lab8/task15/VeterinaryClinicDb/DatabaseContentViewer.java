@@ -6,10 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseContentViewer {
+    private DatabaseContentViewer() {
+    }
 
-    public static void showClientsTableContent() {
-        try (Connection connection = DatabaseConnector.getConnection();
-             Statement statement = connection.createStatement()) {
+    public static void showClientsTableContent(Connection connection) {
+        try (Statement statement = connection.createStatement()) {
 
             String sql = "SELECT * FROM client";
             ResultSet resultSet = statement.executeQuery(sql);
@@ -29,9 +30,8 @@ public class DatabaseContentViewer {
         }
     }
 
-    public static void showPetsTableContent() {
-        try (Connection connection = DatabaseConnector.getConnection();
-             Statement statement = connection.createStatement()) {
+    public static void showPetsTableContent(Connection connection) {
+        try (Statement statement = connection.createStatement()) {
 
             String sql = "SELECT * FROM pet";
             ResultSet resultSet = statement.executeQuery(sql);
@@ -49,9 +49,8 @@ public class DatabaseContentViewer {
         }
     }
 
-    public static void showClientWithPetTableContent() {
-        try (Connection connection = DatabaseConnector.getConnection();
-             Statement statement = connection.createStatement()) {
+    public static void showClientWithPetTableContent(Connection connection) {
+        try (Statement statement = connection.createStatement()) {
 
             String sql = "SELECT * FROM client_with_pet";
             ResultSet resultSet = statement.executeQuery(sql);
