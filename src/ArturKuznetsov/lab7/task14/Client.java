@@ -1,10 +1,8 @@
 package ArturKuznetsov.lab7.task14;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 public class Client implements Runnable {
 
@@ -14,10 +12,21 @@ public class Client implements Runnable {
     private boolean done;
     @Override
     public void run() {
-        try {
-            client = new Socket("127.0.0.1", 8000);
-            out = new PrintWriter(client.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        try (var client = new Socket("127.0.0.1", 8000);
+             var out = new PrintWriter(new OutputStreamWriter(client.getOutputStream(), StandardCharsets.UTF_8), true);
+             var in = new BufferedReader(new InputStreamReader(client.getInputStream(), StandardCharsets.UTF_8))) {
+            this.client = client;
+            this.out = out;
+            this.in = in;
+
+            BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("Please enter your nickname: ");
+            String nickname = consoleReader.readLine();
+            out.println(nickname);
+
+            String BOLD = "\u001B[1m";
+            String RESET = "\u001B[0m";
+            String boldNickname = BOLD + nickname + RESET;
 
             InputHandler inHandler = new InputHandler();
             Thread t = new Thread(inHandler);
@@ -25,7 +34,9 @@ public class Client implements Runnable {
 
             String inMessage;
             while ((inMessage = in.readLine()) != null) {
-                System.out.println(inMessage);
+                if (!inMessage.startsWith(boldNickname + ":")) {
+                    System.out.println(inMessage);
+                }
             }
         } catch (IOException e) {
             shutdown();
@@ -35,9 +46,13 @@ public class Client implements Runnable {
     private void shutdown() {
         done = true;
         try {
-            in.close();
-            out.close();
-            if (!client.isClosed()) {
+            if (in != null) {
+                in.close();
+            }
+            if (out != null) {
+                out.close();
+            }
+            if (client != null && !client.isClosed()) {
                 client.close();
             }
         } catch (IOException e) {
@@ -49,8 +64,7 @@ public class Client implements Runnable {
 
         @Override
         public void run() {
-            try {
-                BufferedReader inReader = new BufferedReader(new InputStreamReader(System.in));
+            try (BufferedReader inReader = new BufferedReader(new InputStreamReader(System.in))) {
                 while (!done) {
                     String message = inReader.readLine();
                     if (message.equals("/quit")) {
