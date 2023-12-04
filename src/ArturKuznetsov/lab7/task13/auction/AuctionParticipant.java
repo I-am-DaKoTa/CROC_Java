@@ -1,8 +1,11 @@
 package ArturKuznetsov.lab7.task13.auction;
 
-import ArturKuznetsov.lab7.task13.exceptions.InvalidDataForBidException;
+import ArturKuznetsov.lab7.task13.exceptions.AuctionTimeExpiredException;
+import ArturKuznetsov.lab7.task13.exceptions.InvalidBidAmountException;
+import ArturKuznetsov.lab7.task13.exceptions.MaxBidReachedException;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class AuctionParticipant implements Runnable {
     private final AuctionLot lot;
@@ -25,8 +28,8 @@ public class AuctionParticipant implements Runnable {
 
             try {
                 lot.placeBid(bidAmount, name);
-            } catch (InvalidDataForBidException e) {
-                System.out.println(e.getMessage());
+            } catch (AuctionTimeExpiredException | InvalidBidAmountException | MaxBidReachedException e) {
+                throw new RuntimeException(e);
             }
 
             try {

@@ -1,7 +1,6 @@
 package ArturKuznetsov.lab7.task13.auction;
 
-import ArturKuznetsov.lab7.task13.exceptions.InvalidDataForBidException;
-import ArturKuznetsov.lab7.task13.exceptions.WinnerIsUndecidedException;
+import ArturKuznetsov.lab7.task13.exceptions.*;
 
 import java.text.NumberFormat;
 import java.time.Duration;
@@ -23,20 +22,24 @@ public class AuctionLot {
         this.endTime = Instant.now().plus(Duration.ofMinutes(1));
     }
 
-    public void placeBid(long bid, String bidderName) {
+    public void placeBid(long bid, String bidderName) throws AuctionTimeExpiredException, MaxBidReachedException, InvalidBidAmountException {
         if (isAuctionFinished()) {
-            throw new InvalidDataForBidException(bidderName, getFormattedNumber(bid), "время ставок закончилось.");
+            throw new AuctionTimeExpiredException(bidderName, getFormattedNumber(bid));
         }
         if (bidderName.equals(currentBidder)) {
-            throw new InvalidDataForBidException(bidderName, getFormattedNumber(bid), "Вы уже владеете максимальной ставкой на данный лот.");
+            throw new MaxBidReachedException(bidderName, getFormattedNumber(bid));
         }
         if (bid <= currentPrice) {
-            throw new InvalidDataForBidException(bidderName, getFormattedNumber(bid), "она меньше или равна текущей максимальной ставки.");
+            throw new InvalidBidAmountException(bidderName, getFormattedNumber(bid));
         }
+
         synchronized (this) {
-            currentPrice = bid;
-            currentBidder = bidderName;
-            amountOfBids++;
+            if (!isAuctionFinished() && bid > currentPrice && !bidderName.equals(currentBidder)) {
+                currentPrice = bid;
+                currentBidder = bidderName;
+                amountOfBids++;
+                System.out.println(amountOfBids + " " + currentBidder);
+            }
         }
     }
 

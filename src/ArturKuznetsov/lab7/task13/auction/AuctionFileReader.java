@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AuctionFileReader {
+
+    private AuctionFileReader() {
+    }
+
     public static ArrayList<AuctionLot> readLotFile(String filePath) {
         ArrayList<AuctionLot> auctionLots = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -18,11 +22,11 @@ public class AuctionFileReader {
                     AuctionLot lot = new AuctionLot(name.trim(), price);
                     auctionLots.add(lot);
                 } catch (NumberFormatException e) {
-                    throw new RuntimeException(e.getMessage());
+                    throw new RuntimeException(e);
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e);
         }
         return auctionLots;
     }
@@ -36,7 +40,7 @@ public class AuctionFileReader {
                 participantsData.add(line);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e);
         }
 
         return participantsData;
